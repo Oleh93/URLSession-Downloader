@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x3N-ID-nMs">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Downloads View Controller-->
+        <scene sceneID="imW-aF-VpT">
+            <objects>
+                <viewController id="x3N-ID-nMs" customClass="DownloadsViewController" customModule="URLSessionDownloader" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AcB-kV-OFJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-OG-OCk">
+                                <rect key="frame" x="0.0" y="44" width="414" height="32"/>
+                                <segments>
+                                    <segment title="To Do"/>
+                                    <segment title="In Progress"/>
+                                    <segment title="Done"/>
+                                </segments>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8kt-iV-iSV">
+                                <rect key="frame" x="0.0" y="83" width="414" height="779"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="p3y-OG-OCk" firstAttribute="leading" secondItem="vKy-dC-vXg" secondAttribute="leading" id="7Dt-Fx-k9t"/>
+                            <constraint firstItem="p3y-OG-OCk" firstAttribute="top" secondItem="vKy-dC-vXg" secondAttribute="top" id="85i-rw-lh5"/>
+                            <constraint firstItem="vKy-dC-vXg" firstAttribute="trailing" secondItem="p3y-OG-OCk" secondAttribute="trailing" id="TBZ-t9-nPJ"/>
+                            <constraint firstItem="vKy-dC-vXg" firstAttribute="bottom" secondItem="8kt-iV-iSV" secondAttribute="bottom" id="Zfb-CC-JQZ"/>
+                            <constraint firstItem="8kt-iV-iSV" firstAttribute="leading" secondItem="vKy-dC-vXg" secondAttribute="leading" id="aBn-sX-CRv"/>
+                            <constraint firstItem="vKy-dC-vXg" firstAttribute="trailing" secondItem="8kt-iV-iSV" secondAttribute="trailing" id="clU-0y-Yjc"/>
+                            <constraint firstItem="8kt-iV-iSV" firstAttribute="top" secondItem="p3y-OG-OCk" secondAttribute="bottom" constant="8" symbolic="YES" id="kKK-9I-Wui"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vKy-dC-vXg"/>
+                    </view>
+                    <connections>
+                        <outlet property="downloadsTableView" destination="8kt-iV-iSV" id="VU1-3k-yJU"/>
+                        <outlet property="segmentControl" destination="p3y-OG-OCk" id="yeM-37-d5C"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TB1-ek-KXW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1363" y="-490"/>
+        </scene>
+    </scenes>
+</document>
