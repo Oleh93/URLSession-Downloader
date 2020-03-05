@@ -28,6 +28,6 @@ class DownloadTableViewCell: UITableViewCell {
 
     // MARK: IBActions
     @IBAction func btnTapped(_ sender: Any) {
-        // MARK: TODO: call appropriate methods of DownloadTableViewCellDelegate
+        // TODO: call appropriate methods of DownloadTableViewCellDelegate
     }
 }

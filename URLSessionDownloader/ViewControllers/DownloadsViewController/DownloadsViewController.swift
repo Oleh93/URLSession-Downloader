@@ -17,8 +17,12 @@ class DownloadsViewController: UIViewController {
     
     // MARK: Properties
     var downloadService: DownloadService = DownloadService()
-    var downloadsSession: URLSession = URLSession(configuration: .default, delegate: DownloadsViewController(), delegateQueue: nil)
-    var images: [Image] = []
+    lazy var downloadsSession: URLSession = URLSession(configuration: .default, delegate: DownloadsViewController(), delegateQueue: nil)
+    var images: [Image] = [
+        Image(url: URL(string: "https://images.unsplash.com/photo-1581704914273-a69d2c4b8b1c?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExODcwMn0")!),
+        Image(url: URL(string: "https://images.unsplash.com/photo-1580871104805-2ef468b129b9?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExODcwMn0")!),
+        Image(url: URL(string: "https://images.unsplash.com/photo-1582972546430-8bd7a9d14ccb?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExODcwMn0")!)
+    ]
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -31,11 +35,11 @@ class DownloadsViewController: UIViewController {
         downloadService.downloadsSession = downloadsSession
         
         // code below is just for testing
-        let image = Image(url: URL(string: "https://images.unsplash.com/photo-1581704914273-a69d2c4b8b1c?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExODcwMn0")!)
-        downloadService.start(image)
-//        downloadService.pause(image)
-//        downloadService.resume(image)
-        
+        for image in images {
+            downloadService.start(image)
+        }
+//        print(downloadService.activeDownloads)
+
     }
     
     // MARK: Private methods
@@ -58,12 +62,8 @@ extension DownloadsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadTableViewCell", for: indexPath) as! DownloadTableViewCell
-        
-        let img = images[indexPath.row]
-        guard let download = downloadService.activeDownloads[img.url] else {return cell}
-        let title = download.isDownloading ? "down" : "paused"
-        cell.name.text = title
-        
+        // TODO: implement
+
         return cell
     }
 }
@@ -110,35 +110,32 @@ extension DownloadsViewController: DownloadTableViewCellDelegate {
 // MARK: URLSessionDownloadDelegate
 extension DownloadsViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let sourceURL = downloadTask.originalRequest?.url else {
-            return
-        }
+
+        // TODO: fix empty activeDownloads
+        print("active:", downloadService.activeDownloads)
+        guard let sourceURL = downloadTask.originalRequest?.url else { return }
+        
         let download = downloadService.activeDownloads[sourceURL]
+
         downloadService.activeDownloads[sourceURL] = nil
         
         print("Download Completed!")
         do {
             let data = try Data(contentsOf: location)
-            let img = UIImage(data: data)
             download?.image.downloaded = true
-            print("Downloaded image size:", img?.size.height, img?.size.width)
+            print("Downloaded image url:", sourceURL)
         }catch let error{
             print("Error: \(error.localizedDescription)")
         }
     }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
-                    totalBytesExpectedToWrite: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         guard let url = downloadTask.originalRequest?.url,
-              let download = downloadService.activeDownloads[url] else { return }
-        
+        let download = downloadService.activeDownloads[url] else { return }
+
         let progress =  Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         download.progress = progress
-        print("progress:", progress)
+        let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
+        print("progress:", progress, "/", totalSize)
     }
-}
-
-extension DownloadsViewController: URLSessionDelegate {
-    // MARK: TODO: write URLSessionDelegate methods
 }

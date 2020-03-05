@@ -10,11 +10,11 @@ import Foundation
 
 class DownloadService {
     var activeDownloads: [URL: Download] = [ : ]
-    var downloadsSession: URLSession?
+    var downloadsSession: URLSession!
     
     func start(_ image: Image) {
       let download = Download(image: image)
-      download.task = downloadsSession?.downloadTask(with: image.url)
+      download.task = downloadsSession.downloadTask(with: image.url)
       download.task?.resume()
       download.isDownloading = true
       activeDownloads[download.image.url] = download
@@ -42,9 +42,9 @@ class DownloadService {
         guard let download = activeDownloads[image.url] else { return }
         
         if let resumeData = download.resumeData {
-            download.task = downloadsSession?.downloadTask(withResumeData: resumeData)
+            download.task = downloadsSession.downloadTask(withResumeData: resumeData)
         } else {
-            download.task = downloadsSession?.downloadTask(with: download.image.url)
+            download.task = downloadsSession.downloadTask(with: download.image.url)
         }
         
         download.task?.resume()
