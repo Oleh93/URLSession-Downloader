@@ -8,8 +8,16 @@
 
 import Foundation
 
+public enum DownloadState {
+    case notStarted
+    case inProgress
+    case paused
+    case finished
+    case canceled
+}
+
 class Download {
-    var isDownloading = false
+    var state: DownloadState = .notStarted
     var progress: Float = 0
     var resumeData: Data?
     var task: URLSessionDownloadTask?
