@@ -11,19 +11,19 @@ import Foundation
 class DownloadService {
     var downloads: [URL: Download] = [ : ]
     var downloadsSession: URLSession!
-
+    
     func cancel(_ image: Image) {
         guard let download = downloads[image.url] else { return }
         
         download.task?.cancel()
-
+        
         download.state = .canceled
     }
     
     func pause(_ image: Image) {
         //        guard let download = activeDownloads[image.url], download.isDownloading else { return }
         guard let download = downloads[image.url] else { return }
-
+        
         download.task?.cancel(byProducingResumeData: { data in
             download.resumeData = data
         })
@@ -36,6 +36,11 @@ class DownloadService {
         
         if let resumeData = download.resumeData {
             download.task = downloadsSession.downloadTask(withResumeData: resumeData)
+            //            download.task = downloadsSession.downloadTask(withResumeData: resumeData, completionHandler: { (url, response, error) in
+            //                print("url:",url)
+            //                print("response:", response)
+            //                print("error:", error)
+            //            })
         } else {
             download.task = downloadsSession.downloadTask(with: download.image.url)
         }

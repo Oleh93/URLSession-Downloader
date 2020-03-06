@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 private enum Constants {
-    static let heightForRow: Int = 100
+    static let heightForRow: Int = 85
 }
 
 final class DownloadsViewController: UIViewController {
@@ -24,16 +24,22 @@ final class DownloadsViewController: UIViewController {
     
     var downloadService: DownloadService = DownloadService()
     lazy var downloadsSession: URLSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+
     var images: [Image] = [
-        Image(url: URL(string: "https://unsplash.com/photos/4rG9L89HnDU/download")!),
-        Image(url: URL(string: "https://unsplash.com/photos/xDU1mH2Ec_E/download")!),
-        Image(url: URL(string: "https://unsplash.com/photos/5pYOmALZgtM/download")!),
-        Image(url: URL(string: "https://unsplash.com/photos/lYXpVfgb02E/download")!)
+        Image(url: URL(string: "http://mirrors.lug.mtu.edu/ubuntu-releases/18.04.4/ubuntu-18.04.4-desktop-amd64.iso")!, index: 0),
+        Image(url: URL(string: "https://unsplash.com/photos/xDU1mH2Ec_E/download")!, index: 1),
+        Image(url: URL(string: "https://unsplash.com/photos/5pYOmALZgtM/download")!, index: 2),
+        Image(url: URL(string: "https://unsplash.com/photos/lYXpVfgb02E/download")!, index: 3),
+        Image(url: URL(string: "https://unsplash.com/photos/nGTtcA1TpWo/download")!, index: 4),
+        Image(url: URL(string: "https://unsplash.com/photos/iKaEFWaIMbk/download")!, index: 5),
+        Image(url: URL(string: "https://unsplash.com/photos/CkInCM8e1ig/download")!, index: 6),
+        Image(url: URL(string: "https://unsplash.com/photos/YdF-KlJZJEU/download")!, index: 7),
+        Image(url: URL(string: "https://unsplash.com/photos/5JzrLBcA-2w/download")!, index: 8)
     ]
     lazy var imagesToShow = images
     
     // MARK: IBActions
-
+    
     @IBAction func segmentControlChanged(_ sender: Any) {
         reloadImagesToShow()
         downloadsTableView.reloadData()
@@ -44,7 +50,7 @@ final class DownloadsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("app started")
-        
+                
         setupDownloadsTableView()
         setupDownloadTableViewCell()
         setupSegmentControl()
@@ -70,7 +76,7 @@ final class DownloadsViewController: UIViewController {
         case 1:
             imagesToShow = images.filter { (image) -> Bool in
                 downloadService.downloads[image.url]?.state == .inProgress ||
-                downloadService.downloads[image.url]?.state == .paused
+                    downloadService.downloads[image.url]?.state == .paused
             }
         case 2:
             imagesToShow = images.filter { (image) -> Bool in
@@ -102,7 +108,7 @@ extension DownloadsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imagesToShow.count
     }
-
+    
     //swiftlint:disable force_cast
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadTableViewCell", for: indexPath) as! DownloadTableViewCell
@@ -171,8 +177,8 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
         print("Download Completed!")
         do {
             let data = try Data(contentsOf: location)
-            let img = UIImage(data: data)
-            print(img ?? "no image")
+//            let img = UIImage(data: data)
+//            print(img ?? "no image")
             download?.image.downloaded = true
             //            print("Downloaded image url:", sourceURL)
         } catch let error {
@@ -191,23 +197,24 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         guard let url = downloadTask.originalRequest?.url,
-              let download = downloadService.downloads[url] else { return }
+            let download = downloadService.downloads[url] else { return }
         
         // progress in percentage
         let progress =  Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         download.progress = progress
-
         print("progress: \(totalBytesWritten) / \(totalBytesExpectedToWrite) bytes")
+        
+        DispatchQueue.main.async {
+            if let cell = self.downloadsTableView.cellForRow(at: IndexPath(row: download.image.index, section: 0)) as? DownloadTableViewCell {
+                cell.updateProgressView(progress: download.progress)
+            }
+        }
     }
-    
-    //    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    //        print("Error of completion: \(error)")
-    //        print("Progress: \((task as! URLSessionDownloadTask).progress)")
-    //    }
 }
 
-//extension DownloadsViewController: URLSessionDataDelegate {
-//    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-//        print("data received: \(data)")
-//    }
-//}
+//swiftlint:disable force_cast
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        print("Error of completion: \(error)")
+        print("Progress: \((task as! URLSessionDownloadTask).progress)")
+    }
+//swiftlint:enable force_cast

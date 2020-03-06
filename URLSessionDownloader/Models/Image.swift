@@ -11,8 +11,10 @@ import Foundation
 class Image {
     var url: URL
     var downloaded: Bool = false
-
-    init(url: URL) {
+    var index: Int
+    
+    init(url: URL, index: Int) {
         self.url = url
+        self.index = index
     }
 }

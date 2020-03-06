@@ -32,6 +32,10 @@ class DownloadTableViewCell: UITableViewCell {
     }
     
     // MARK: Methods
+
+    func updateProgressView(progress: Float) {
+        progressView.progress = progress
+    }
     
     func configure(image: Image, download: Download?) {
         name.text = image.url.absoluteString
@@ -39,12 +43,16 @@ class DownloadTableViewCell: UITableViewCell {
         switch download?.state {
         case .notStarted:
             button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+            self.progressView.isHidden = true
         case .inProgress:
             button.setImage(UIImage(systemName: "stop.circle"), for: .normal)
+            self.progressView.isHidden = false
         case .paused:
             button.setImage(UIImage(systemName: "play.circle"), for: .normal)
+            self.progressView.isHidden = false
         case .finished:
             button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+            self.progressView.isHidden = true
         case .canceled:
             print("Warning: cancelled not implemented")
         case .none:
