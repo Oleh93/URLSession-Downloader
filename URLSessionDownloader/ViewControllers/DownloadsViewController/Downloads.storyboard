@@ -22,6 +22,9 @@
                                     <segment title="In Progress"/>
                                     <segment title="Done"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentControlChanged:" destination="x3N-ID-nMs" eventType="valueChanged" id="OTL-lC-ETg"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8kt-iV-iSV">
                                 <rect key="frame" x="0.0" y="83" width="414" height="779"/>

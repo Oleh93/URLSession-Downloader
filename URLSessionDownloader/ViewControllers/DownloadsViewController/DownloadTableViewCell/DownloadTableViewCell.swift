@@ -24,7 +24,7 @@ class DownloadTableViewCell: UITableViewCell {
     var delegate: DownloadTableViewCellDelegate?
     
     // MARK: IBActions
-    @IBAction func btnTapped(_ sender: Any) {
+    @IBAction func buttonTapped(_ sender: Any) {
         // TODO: call appropriate methods of DownloadTableViewCellDelegate
         delegate?.buttonTapped(self)
     }
@@ -32,7 +32,7 @@ class DownloadTableViewCell: UITableViewCell {
     // MARK: Methods
     func configure(image: Image, download: Download?) {
         name.text = image.url.absoluteString
-
+        
         switch download?.state {
         case .notStarted:
             button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
@@ -42,10 +42,10 @@ class DownloadTableViewCell: UITableViewCell {
             button.setImage(UIImage(systemName: "play.circle"), for: .normal)
         case .finished:
             button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+        case .canceled:
+            print("Warning: cancelled not implemented")
         case .none:
             return
-        case .some(.canceled):
-            print("Warning: cancelled not implemented")
         }
     }
 }

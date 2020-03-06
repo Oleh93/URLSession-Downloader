@@ -68,7 +68,7 @@
 			children = (
 				6A9078ED240FDB2700312C97 /* ViewControllers */,
 				6A9078EA240FD5AC00312C97 /* Models */,
-				6A9078E5240F1C4900312C97 /* Network */,
+				6A9078E5240F1C4900312C97 /* Networking */,
 				6A9078D1240F1AC100312C97 /* AppDelegate.swift */,
 				6A9078D3240F1AC100312C97 /* SceneDelegate.swift */,
 				6A9078DA240F1AC300312C97 /* Assets.xcassets */,
@@ -78,12 +78,12 @@
 			path = URLSessionDownloader;
 			sourceTree = "<group>";
 		};
-		6A9078E5240F1C4900312C97 /* Network */ = {
+		6A9078E5240F1C4900312C97 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				6A9078E8240FD2C300312C97 /* DownloadService.swift */,
 			);
-			path = Network;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		6A9078EA240FD5AC00312C97 /* Models */ = {
