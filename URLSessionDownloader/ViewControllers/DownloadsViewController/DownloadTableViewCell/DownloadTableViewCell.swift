@@ -15,21 +15,24 @@ protocol DownloadTableViewCellDelegate {
 class DownloadTableViewCell: UITableViewCell {
     
     // MARK: IBOutlets
+    
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var button: UIButton!
     
     // MARK: Properties
+    
     var delegate: DownloadTableViewCellDelegate?
     
     // MARK: IBActions
+    
     @IBAction func buttonTapped(_ sender: Any) {
-        // TODO: call appropriate methods of DownloadTableViewCellDelegate
         delegate?.buttonTapped(self)
     }
     
     // MARK: Methods
+    
     func configure(image: Image, download: Download?) {
         name.text = image.url.absoluteString
         

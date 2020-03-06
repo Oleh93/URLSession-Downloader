@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C34347438BCF22C3A2FE8B5 /* Pods_URLSessionDownloader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B90FAAB46A379772B872DFFE /* Pods_URLSessionDownloader.framework */; };
 		6A9078D2240F1AC100312C97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078D1240F1AC100312C97 /* AppDelegate.swift */; };
 		6A9078D4240F1AC100312C97 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078D3240F1AC100312C97 /* SceneDelegate.swift */; };
 		6A9078DB240F1AC300312C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A9078DA240F1AC300312C97 /* Assets.xcassets */; };
@@ -34,6 +35,9 @@
 		6A9078F0240FDB6100312C97 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		6A9078F3240FDC9100312C97 /* DownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTableViewCell.swift; sourceTree = "<group>"; };
 		6A9078F4240FDC9100312C97 /* DownloadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadTableViewCell.xib; sourceTree = "<group>"; };
+		758FED7F4C660CB2AF6A532D /* Pods-URLSessionDownloader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLSessionDownloader.debug.xcconfig"; path = "Target Support Files/Pods-URLSessionDownloader/Pods-URLSessionDownloader.debug.xcconfig"; sourceTree = "<group>"; };
+		B90FAAB46A379772B872DFFE /* Pods_URLSessionDownloader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URLSessionDownloader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3E3F39319602D8608947682 /* Pods-URLSessionDownloader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-URLSessionDownloader.release.xcconfig"; path = "Target Support Files/Pods-URLSessionDownloader/Pods-URLSessionDownloader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C34347438BCF22C3A2FE8B5 /* Pods_URLSessionDownloader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +57,8 @@
 			children = (
 				6A9078D0240F1AC100312C97 /* URLSessionDownloader */,
 				6A9078CF240F1AC100312C97 /* Products */,
+				7F6EB13E093E0DC8964B859F /* Pods */,
+				CE424E0D2CDB7C9A36E5304D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,6 +129,24 @@
 			path = DownloadTableViewCell;
 			sourceTree = "<group>";
 		};
+		7F6EB13E093E0DC8964B859F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				758FED7F4C660CB2AF6A532D /* Pods-URLSessionDownloader.debug.xcconfig */,
+				D3E3F39319602D8608947682 /* Pods-URLSessionDownloader.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CE424E0D2CDB7C9A36E5304D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B90FAAB46A379772B872DFFE /* Pods_URLSessionDownloader.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,9 +154,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A9078E2240F1AC300312C97 /* Build configuration list for PBXNativeTarget "URLSessionDownloader" */;
 			buildPhases = (
+				B617158EE025C4DC93529FFF /* [CP] Check Pods Manifest.lock */,
 				6A9078CA240F1AC100312C97 /* Sources */,
 				6A9078CB240F1AC100312C97 /* Frameworks */,
 				6A9078CC240F1AC100312C97 /* Resources */,
+				6AAF55F824128242005D6965 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -188,6 +215,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6AAF55F824128242005D6965 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		B617158EE025C4DC93529FFF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-URLSessionDownloader-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A9078CA240F1AC100312C97 /* Sources */ = {
@@ -334,6 +403,7 @@
 		};
 		6A9078E3240F1AC300312C97 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 758FED7F4C660CB2AF6A532D /* Pods-URLSessionDownloader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -351,6 +421,7 @@
 		};
 		6A9078E4240F1AC300312C97 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3E3F39319602D8608947682 /* Pods-URLSessionDownloader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

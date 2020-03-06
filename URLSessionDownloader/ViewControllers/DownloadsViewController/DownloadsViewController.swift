@@ -102,7 +102,8 @@ extension DownloadsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imagesToShow.count
     }
-    
+
+    //swiftlint:disable force_cast
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadTableViewCell", for: indexPath) as! DownloadTableViewCell
         cell.delegate = self
@@ -112,6 +113,8 @@ extension DownloadsViewController: UITableViewDataSource {
         
         return cell
     }
+    //swiftlint:enable force_cast
+    
 }
 
 // MARK: UITableViewDelegate
@@ -168,9 +171,11 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
         print("Download Completed!")
         do {
             let data = try Data(contentsOf: location)
+            let img = UIImage(data: data)
+            print(img ?? "no image")
             download?.image.downloaded = true
             //            print("Downloaded image url:", sourceURL)
-        }catch let error{
+        } catch let error {
             print("Error: \(error.localizedDescription)")
         }
         
@@ -206,4 +211,3 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
 //        print("data received: \(data)")
 //    }
 //}
-

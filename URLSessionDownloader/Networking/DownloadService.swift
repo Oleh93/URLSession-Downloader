@@ -16,7 +16,8 @@ class DownloadService {
         guard let download = downloads[image.url] else { return }
         
         download.task?.cancel()
-        // TODO: specify state here
+
+        download.state = .canceled
     }
     
     func pause(_ image: Image) {
@@ -27,7 +28,7 @@ class DownloadService {
             download.resumeData = data
         })
         
-        download.state = DownloadState.paused
+        download.state = .paused
     }
     
     func resume(_ image: Image) {
@@ -35,19 +36,18 @@ class DownloadService {
         
         if let resumeData = download.resumeData {
             download.task = downloadsSession.downloadTask(withResumeData: resumeData)
-//            download.task?.resume()
-            print("here")
         } else {
             download.task = downloadsSession.downloadTask(with: download.image.url)
         }
         
         download.task?.resume()
-        download.state = DownloadState.inProgress
+        download.state = .inProgress
     }
     
     func add(_ image: Image) {
         let download = Download(image: image)
         download.task = downloadsSession.downloadTask(with: image.url)
         downloads[download.image.url] = download
+        download.state = .notStarted
     }
 }
