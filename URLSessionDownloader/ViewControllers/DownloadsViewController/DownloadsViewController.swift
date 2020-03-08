@@ -51,9 +51,9 @@ final class DownloadsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO: use this to set "No internet connection" to the view
-        if Reachability.isConnectedToNetwork(){
+        if Reachability.isConnectedToNetwork() {
             print("Internet Connection Available!")
-        }else{
+        } else{
             print("Internet Connection not Available!")
         }
         
@@ -142,7 +142,14 @@ extension DownloadsViewController: UITableViewDelegate {
             let image = self.imagesToShow[indexPath.row]
             self.downloadService.cancel(image)
             self.downloadService.downloads[image.url]?.state = .notStarted
-            
+            // TODO: clear cache here
+            self.reloadImagesToShow()
+            self.downloadsTableView.reloadData()
+        }
+        let deleteFromDone = UIContextualAction(style: .destructive, title: nil) { (_, _, _: (Bool) -> Void) in
+            let image = self.imagesToShow[indexPath.row]
+            self.downloadService.downloads[image.url]?.state = .notStarted
+            // TODO: clear image here
             self.reloadImagesToShow()
             self.downloadsTableView.reloadData()
         }
@@ -156,7 +163,7 @@ extension DownloadsViewController: UITableViewDelegate {
         case 1:
             return UISwipeActionsConfiguration(actions: [deleteFromToDo])
         case 2:
-            return UISwipeActionsConfiguration(actions: [deleteFromToDo])
+            return UISwipeActionsConfiguration(actions: [deleteFromDone])
         default:
             return nil
         }
