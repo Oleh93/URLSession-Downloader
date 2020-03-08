@@ -47,6 +47,11 @@ class DownloadService {
         
         download.task?.resume()
         download.state = .inProgress
+        
+//        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 3) {
+//            print("SESSION:", self.downloadsSession)
+//            print("SESSION DELEGATE:", self.downloadsSession.delegate)
+//        }
     }
     
     func add(_ image: Image) {
