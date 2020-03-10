@@ -12,17 +12,17 @@ class DownloadService {
     var downloads: [URL: Download] = [ : ]
     var downloadsSession: URLSession!
     
-    func cancel(_ image: Image) {
-        guard let download = downloads[image.url] else { return }
+    func cancel(_ image: ImageResponse) {
+        guard let download = downloads[image.links.download] else { return }
         
         download.task?.cancel()
         
         download.state = .canceled
     }
     
-    func pause(_ image: Image) {
+    func pause(_ image: ImageResponse) {
         //        guard let download = activeDownloads[image.url], download.isDownloading else { return }
-        guard let download = downloads[image.url] else { return }
+        guard let download = downloads[image.links.download] else { return }
         
         download.task?.cancel(byProducingResumeData: { data in
             download.resumeData = data
@@ -31,8 +31,8 @@ class DownloadService {
         download.state = .paused
     }
     
-    func resume(_ image: Image) {
-        guard let download = downloads[image.url] else { return }
+    func resume(_ image: ImageResponse) {
+        guard let download = downloads[image.links.download] else { return }
         
         if let resumeData = download.resumeData {
             download.task = downloadsSession.downloadTask(withResumeData: resumeData)
@@ -42,7 +42,7 @@ class DownloadService {
             //                print("error:", error)
             //            })
         } else {
-            download.task = downloadsSession.downloadTask(with: download.image.url)
+            download.task = downloadsSession.downloadTask(with: download.image.links.download)
         }
         
         download.task?.resume()
@@ -54,10 +54,10 @@ class DownloadService {
 //        }
     }
     
-    func add(_ image: Image) {
+    func add(_ image: ImageResponse) {
         let download = Download(image: image)
-        download.task = downloadsSession.downloadTask(with: image.url)
-        downloads[download.image.url] = download
+        download.task = downloadsSession.downloadTask(with: image.links.download)
+        downloads[download.image.links.download] = download
         download.state = .notStarted
     }
 }

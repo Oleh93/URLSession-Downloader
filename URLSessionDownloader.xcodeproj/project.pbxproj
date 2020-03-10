@@ -15,7 +15,6 @@
 		6A9078DE240F1AC300312C97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A9078DC240F1AC300312C97 /* LaunchScreen.storyboard */; };
 		6A9078E7240F1C5700312C97 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078E6240F1C5700312C97 /* Download.swift */; };
 		6A9078E9240FD2C300312C97 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078E8240FD2C300312C97 /* DownloadService.swift */; };
-		6A9078EC240FD5BB00312C97 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078EB240FD5BB00312C97 /* Image.swift */; };
 		6A9078EF240FDB4000312C97 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078EE240FDB4000312C97 /* DownloadsViewController.swift */; };
 		6A9078F1240FDB6100312C97 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A9078F0240FDB6100312C97 /* Downloads.storyboard */; };
 		6A9078F5240FDC9100312C97 /* DownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078F3240FDC9100312C97 /* DownloadTableViewCell.swift */; };
@@ -35,7 +34,6 @@
 		6A9078DF240F1AC300312C97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A9078E6240F1C5700312C97 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		6A9078E8240FD2C300312C97 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
-		6A9078EB240FD5BB00312C97 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		6A9078EE240FDB4000312C97 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		6A9078F0240FDB6100312C97 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		6A9078F3240FDC9100312C97 /* DownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTableViewCell.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				6A9078E6240F1C5700312C97 /* Download.swift */,
-				6A9078EB240FD5BB00312C97 /* Image.swift */,
 				6A91341C2417AB7400FD3980 /* ImageResponse.swift */,
 			);
 			path = Models;
@@ -295,7 +292,6 @@
 				6A9078E9240FD2C300312C97 /* DownloadService.swift in Sources */,
 				6A9134242417B9FD00FD3980 /* Credentials.swift in Sources */,
 				6A9078F5240FDC9100312C97 /* DownloadTableViewCell.swift in Sources */,
-				6A9078EC240FD5BB00312C97 /* Image.swift in Sources */,
 				6A9078EF240FDB4000312C97 /* DownloadsViewController.swift in Sources */,
 				6A9078D2240F1AC100312C97 /* AppDelegate.swift in Sources */,
 				6A9078E7240F1C5700312C97 /* Download.swift in Sources */,

@@ -11,20 +11,11 @@ import Foundation
 class NetworkManager {
     static let shared = NetworkManager()
     
-    let session = URLSession.shared
+    var sessionFinished: Bool?
+    let session = URLSession.init(configuration: .default)
     
-    
-    func fetchImages(completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        let url = URL(string: "https://api.unsplash.com/photos/random?client_id=\(Credentials.token)")!
-        
-//        let task = self.session.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                completion(nil, response, error)
-//            }
-//            if let data = data {
-//                completion(data, response, nil)
-//            }
-//        }
+    func fetchImages(completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let url = URL(string: "https://api.unsplash.com/photos?client_id=\(Credentials.token)&page=1&per_page=30")!
         let task = self.session.dataTask(with: url) { (data, response, error) in
             completion(data, response, error)
         }

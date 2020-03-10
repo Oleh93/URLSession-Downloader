@@ -39,7 +39,7 @@ class DownloadTableViewCell: UITableViewCell {
     
     func configure(download: Download?) {
         let image = download?.image
-        name.text = image?.url.absoluteString
+        name.text = image?.links.download.absoluteString
         progressView.progress = download?.progress ?? 0
         switch download?.state {
         case .notStarted:
