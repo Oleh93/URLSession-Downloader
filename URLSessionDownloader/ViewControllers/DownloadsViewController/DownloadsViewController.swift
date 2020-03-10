@@ -26,17 +26,7 @@ final class DownloadsViewController: UIViewController {
     lazy var downloadsSession: URLSession = URLSession(configuration: .background(withIdentifier: "bgsession"), delegate: self, delegateQueue: nil)
     
     // TODO: download json from api
-    var images: [Image] = [
-        Image(url: URL(string: "http://mirrors.lug.mtu.edu/ubuntu-releases/18.04.4/ubuntu-18.04.4-desktop-amd64.iso")!, index: 0),
-        Image(url: URL(string: "https://unsplash.com/photos/_Jsde7RXd3o/download")!, index: 1),
-        Image(url: URL(string: "https://unsplash.com/photos/5pYOmALZgtM/download")!, index: 2),
-        Image(url: URL(string: "https://unsplash.com/photos/lYXpVfgb02E/download")!, index: 3),
-        Image(url: URL(string: "https://unsplash.com/photos/nGTtcA1TpWo/download")!, index: 4),
-        Image(url: URL(string: "https://unsplash.com/photos/iKaEFWaIMbk/download")!, index: 5),
-        Image(url: URL(string: "https://unsplash.com/photos/CkInCM8e1ig/download")!, index: 6),
-        Image(url: URL(string: "https://unsplash.com/photos/YdF-KlJZJEU/download")!, index: 7),
-        Image(url: URL(string: "https://unsplash.com/photos/5JzrLBcA-2w/download")!, index: 8)
-    ]
+    var images: [Image] = []
     lazy var imagesToShow = images
     
     // MARK: IBActions
@@ -50,6 +40,17 @@ final class DownloadsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NetworkManager.shared.fetchImages { (data, resp, err) in
+            guard let data = data else { return }
+            do {
+                let parsedImage = try JSONDecoder().decode(ImageResponse.self, from: data )
+                print(parsedImage)
+//                self.images.append(parsedImage)
+            } catch {
+                print("Error while json serialization")
+            }
+        }
         // TODO: use this to set "No internet connection" to the view
         if Reachability.isConnectedToNetwork() {
             print("Internet Connection Available!")
@@ -57,20 +58,20 @@ final class DownloadsViewController: UIViewController {
             print("Internet Connection not Available!")
         }
         
-        print("app started")
-        
-        setupDownloadsTableView()
-        setupDownloadTableViewCell()
-        setupSegmentControl()
-        
-        downloadService.downloadsSession = downloadsSession
-        
-        // code below is just for testing
-        for image in imagesToShow {
-            downloadService.add(image)
-        }
-        reloadImagesToShow()
-        downloadsTableView.reloadData()
+        //        print("app started")
+        //
+        //        setupDownloadsTableView()
+        //        setupDownloadTableViewCell()
+        //        setupSegmentControl()
+        //
+        //        downloadService.downloadsSession = downloadsSession
+        //
+        //        // code below is just for testing
+        //        for image in imagesToShow {
+        //            downloadService.add(image)
+        //        }
+        //        reloadImagesToShow()
+        //        downloadsTableView.reloadData()
     }
     
     // MARK: Private methods
