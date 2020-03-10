@@ -22,6 +22,7 @@ final class DownloadsViewController: UIViewController {
     @IBOutlet private weak var label: UILabel!
     
     // MARK: Properties
+    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     var downloadService: DownloadService = DownloadService()
     //    lazy var downloadsSession: URLSession = URLSession(configuration: .background(withIdentifier: "bgsession"), delegate: self, delegateQueue: nil)
@@ -124,6 +125,24 @@ final class DownloadsViewController: UIViewController {
     private func setupSegmentControl() {
         segmentControl.selectedSegmentIndex = 0
     }
+    private func showImage(_ imageResponse: ImageResponse) {
+        //swiftlint:disable force_cast
+        DispatchQueue.main.async {
+            do {
+                print(imageResponse.links.download.lastPathComponent)
+                let data = try Data(contentsOf: self.documentsPath.appendingPathComponent(imageResponse.links.download.lastPathComponent + (imageResponse.id ?? "1")))
+                let image = UIImage(data: data)
+                if let image = image {
+                        let vc = PreviewViewController(nibName: nil, bundle: nil)
+                        vc.addImageView(image: image)
+                        self.present(vc, animated: true)
+                    }
+            } catch {
+                print("error")
+            }
+        }
+        //swiftlint:enable force_cast
+    }
     
 }
 
@@ -181,6 +200,12 @@ extension DownloadsViewController: UITableViewDelegate {
             return nil
         }
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let imageResponse = imagesToShow[indexPath.row]
+            showImage(imageResponse)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: DownloadTableViewCellDelegate
@@ -221,15 +246,19 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
         let download = downloadService.downloads[sourceURL]
         download?.state = .finished
         download?.task = nil
-        print("Download Completed!")
+        // 2
+        let destinationURL = documentsPath.appendingPathComponent(sourceURL.lastPathComponent + (download?.image.id ?? "1"))
+        print(destinationURL)
+        
+        // 3
+        let fileManager = FileManager.default
+        try? fileManager.removeItem(at: destinationURL)
+        
         do {
-            let data = try Data(contentsOf: location)
-            let img = UIImage(data: data)
-
-            print("Downloaded image: \(img)")
-            print("Downloaded image url: \(sourceURL)\n")
+          try fileManager.copyItem(at: location, to: destinationURL)
+//          download?.image.downloaded = true
         } catch let error {
-            print("Error while converting contents of location to data: \(error.localizedDescription)")
+          print("Could not copy file to disk: \(error.localizedDescription)")
         }
         
         DispatchQueue.main.async {

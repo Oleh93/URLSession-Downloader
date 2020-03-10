@@ -20,7 +20,7 @@ class Download {
     var progress: Float = 0
     var resumeData: Data?
     var task: URLSessionDownloadTask?
-    let image: ImageResponse
+    var image: ImageResponse
 
     init(image: ImageResponse) {
         self.image = image
