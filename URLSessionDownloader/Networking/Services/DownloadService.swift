@@ -16,8 +16,8 @@ class DownloadService {
         guard let download = downloads[image.links.download] else { return }
         
         download.task?.cancel()
-        
-        download.state = .canceled
+        download.resumeData = nil
+        download.state = .notStarted
     }
     
     func pause(_ image: ImageResponse) {

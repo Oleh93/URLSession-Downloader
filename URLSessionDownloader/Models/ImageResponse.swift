@@ -11,7 +11,7 @@ import Foundation
 struct ImageResponse: Decodable {
     var id: String?
     var alt_description: String?
-    var links: Links
+    var links: Links    
 }
 
 struct Links: Decodable {

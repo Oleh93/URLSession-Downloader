@@ -19,11 +19,18 @@ final class DownloadsViewController: UIViewController {
     
     @IBOutlet private weak var downloadsTableView: UITableView!
     @IBOutlet private weak var segmentControl: UISegmentedControl!
+    @IBOutlet private weak var label: UILabel!
     
     // MARK: Properties
     
     var downloadService: DownloadService = DownloadService()
-    lazy var downloadsSession: URLSession = URLSession(configuration: .background(withIdentifier: "bgsession"), delegate: self, delegateQueue: nil)
+    //    lazy var downloadsSession: URLSession = URLSession(configuration: .background(withIdentifier: "bgsession"), delegate: self, delegateQueue: nil)
+    lazy var downloadsSession: URLSession = {
+        let config = URLSessionConfiguration.background(withIdentifier: "MySession")
+        config.sessionSendsLaunchEvents = true
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
+    }()
     
     var images: [ImageResponse] = []
     lazy var imagesToShow = images
@@ -39,18 +46,40 @@ final class DownloadsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !Reachability.isConnectedToNetwork() {
+            self.downloadsTableView.isHidden = true
+            self.segmentControl.isHidden = true
+            label.text = "No internet connection"
+            return
+        }
+        
+        self.downloadsTableView.isHidden = true
+        self.segmentControl.isHidden = true
+        label.text = "Fetching data..."
+        
         setupDownloadsTableView()
         setupDownloadTableViewCell()
         setupSegmentControl()
         downloadService.downloadsSession = downloadsSession
-        
-        NetworkManager.shared.fetchImages { (data, _, _) in
-            guard let data = data else { return }
+    
+        NetworkManager.shared.fetchImages { (data, _, error) in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.label.text = "No data To Do"
+                }
+                return
+            }
+            guard let data = data else {return}
             do {
                 let parsedImages = try JSONDecoder().decode([ImageResponse].self, from: data )
                 self.images = parsedImages
                 DispatchQueue.main.async {
+                    self.label.isHidden = true
+                    self.downloadsTableView.isHidden = false
+                    self.segmentControl.isHidden = false
+    
                     for i in self.images { self.downloadService.add(i) }
+    
                     self.reloadImagesToShow()
                     self.downloadsTableView.reloadData()
                 }
@@ -129,21 +158,17 @@ extension DownloadsViewController: UITableViewDelegate {
         let deleteFromToDo = UIContextualAction(style: .destructive, title: "Cancel") { (_, _, _: (Bool) -> Void) in
             let image = self.imagesToShow[indexPath.row]
             self.downloadService.cancel(image)
-            self.downloadService.downloads[image.links.download]?.state = .notStarted
-            // TODO: clear cache here
             self.reloadImagesToShow()
             self.downloadsTableView.reloadData()
         }
-        let deleteFromDone = UIContextualAction(style: .destructive, title: "Cancel") { (_, _, _: (Bool) -> Void) in
+        
+        let deleteFromDone = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _: (Bool) -> Void) in
             let image = self.imagesToShow[indexPath.row]
-            self.downloadService.downloads[image.links.download]?.state = .notStarted
+            self.downloadService.cancel(image)
             // TODO: clear image here
             self.reloadImagesToShow()
             self.downloadsTableView.reloadData()
         }
-        // TODO: action for 5.1
-        deleteFromToDo.backgroundColor = .red
-        deleteFromToDo.image = .remove
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
@@ -178,8 +203,6 @@ extension DownloadsViewController: DownloadTableViewCellDelegate {
             print("resumed tapped")
         case .finished:
             print("finished tapped")
-        case .canceled:
-            print("Error: .cancelled not implemented")
         }
         
         cell.configure(download: download)
@@ -202,9 +225,7 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
         do {
             let data = try Data(contentsOf: location)
             let img = UIImage(data: data)
-            
-            //            download?.image.downloaded = true
-            
+
             print("Downloaded image: \(img)")
             print("Downloaded image url: \(sourceURL)\n")
         } catch let error {
@@ -249,5 +270,4 @@ extension DownloadsViewController: URLSessionDownloadDelegate {
         print("Progress: \((task as! URLSessionDownloadTask).progress)")
     }
     //    swiftlint:enable force_cast
-    
 }

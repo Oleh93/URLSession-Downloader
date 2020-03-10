@@ -13,7 +13,6 @@ public enum DownloadState {
     case inProgress
     case paused
     case finished
-    case canceled
 }
 
 class Download {

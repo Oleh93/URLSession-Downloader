@@ -54,8 +54,6 @@ class DownloadTableViewCell: UITableViewCell {
         case .finished:
             button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
             self.progressView.isHidden = true
-        case .canceled:
-            print("Warning: cancelled not implemented")
         case .none:
             return
         }
