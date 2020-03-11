@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4C34347438BCF22C3A2FE8B5 /* Pods_URLSessionDownloader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B90FAAB46A379772B872DFFE /* Pods_URLSessionDownloader.framework */; };
-		6A052C7E2418409200B94D8C /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A052C7D2418409200B94D8C /* Error.swift */; };
 		6A4C8ABA2415095A000B2A6E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4C8AB92415095A000B2A6E /* Reachability.swift */; };
 		6A9078D2240F1AC100312C97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9078D1240F1AC100312C97 /* AppDelegate.swift */; };
 		6A9078DB240F1AC300312C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A9078DA240F1AC300312C97 /* Assets.xcassets */; };
@@ -27,7 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6A052C7D2418409200B94D8C /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		6A4C8AB92415095A000B2A6E /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		6A9078CE240F1AC100312C97 /* URLSessionDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URLSessionDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9078D1240F1AC100312C97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 				6A9078EE240FDB4000312C97 /* DownloadsViewController.swift */,
 				6A9078F0240FDB6100312C97 /* Downloads.storyboard */,
 				6A9078F7240FDC9900312C97 /* DownloadTableViewCell */,
-				6A052C7D2418409200B94D8C /* Error.swift */,
 			);
 			path = DownloadsViewController;
 			sourceTree = "<group>";
@@ -304,7 +301,6 @@
 				6A9134222417AD8500FD3980 /* NetworkManagers.swift in Sources */,
 				6A4C8ABA2415095A000B2A6E /* Reachability.swift in Sources */,
 				6A9078E9240FD2C300312C97 /* DownloadService.swift in Sources */,
-				6A052C7E2418409200B94D8C /* Error.swift in Sources */,
 				6A9134242417B9FD00FD3980 /* Credentials.swift in Sources */,
 				7CB6AE5F241833A100EBB59B /* PreviewViewController.swift in Sources */,
 				6A9078F5240FDC9100312C97 /* DownloadTableViewCell.swift in Sources */,

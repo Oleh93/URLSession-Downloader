@@ -21,7 +21,6 @@ class DownloadService {
     }
     
     func pause(_ image: ImageResponse) {
-        //        guard let download = activeDownloads[image.url], download.isDownloading else { return }
         guard let download = downloads[image.links.download] else { return }
         
         download.task?.cancel(byProducingResumeData: { data in
@@ -36,22 +35,12 @@ class DownloadService {
         
         if let resumeData = download.resumeData {
             download.task = downloadsSession.downloadTask(withResumeData: resumeData)
-            //            download.task = downloadsSession.downloadTask(withResumeData: resumeData, completionHandler: { (url, response, error) in
-            //                print("url:",url)
-            //                print("response:", response)
-            //                print("error:", error)
-            //            })
         } else {
             download.task = downloadsSession.downloadTask(with: download.image.links.download)
         }
         
         download.task?.resume()
         download.state = .inProgress
-        
-//        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 3) {
-//            print("SESSION:", self.downloadsSession)
-//            print("SESSION DELEGATE:", self.downloadsSession.delegate)
-//        }
     }
     
     func add(_ image: ImageResponse) {

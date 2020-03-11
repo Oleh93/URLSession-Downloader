@@ -16,10 +16,10 @@ class DownloadTableViewCell: UITableViewCell {
     
     // MARK: IBOutlets
     
-    @IBOutlet weak var icon: UIImageView!
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet private weak var icon: UIImageView!
+    @IBOutlet private weak var progressView: UIProgressView!
+    @IBOutlet private weak var name: UILabel!
+    @IBOutlet private weak var button: UIButton!
     
     // MARK: Properties
     
