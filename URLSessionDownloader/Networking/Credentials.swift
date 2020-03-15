@@ -8,6 +8,6 @@
 
 import Foundation
 
-class Credentials {
+enum Credentials {
     static var token = "kKKnsJASFbarg71PfLCkUzRZhrURLZ1NbzLZuaaJJow"
 }

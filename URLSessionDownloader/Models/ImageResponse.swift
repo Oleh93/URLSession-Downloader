@@ -11,7 +11,8 @@ import Foundation
 struct ImageResponse: Decodable {
     var id: String?
     var alt_description: String?
-    var links: Links    
+    var urls: Urls
+    var links: Links
 }
 
 struct Links: Decodable {
@@ -19,7 +20,7 @@ struct Links: Decodable {
     var html: URL
     var download: URL
     var download_location: URL
-
+    
     enum CodingKeys: String, CodingKey {
         case imageSelf = "self"
         case html
@@ -37,5 +38,21 @@ struct Links: Decodable {
         html = URL(string: htmlString)!
         download = URL(string: downloadString)!
         download_location = URL(string: download_locationString)!
+    }
+}
+
+struct Urls: Decodable {
+    var thumb: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case thumb
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let thumbString = try container.decode(String.self, forKey: .thumb)
+        
+        thumb = URL(string: thumbString)!
     }
 }
