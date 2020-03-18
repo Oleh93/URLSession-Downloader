@@ -50,19 +50,10 @@ final class DownloadsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !Reachability.isConnectedToNetwork() {
-            self.downloadsTableView.isHidden = true
-            self.segmentControl.isHidden = true
-            label.text = "No internet connection"
-            return
-        }
-        
         self.downloadsTableView.isHidden = true
         self.segmentControl.isHidden = true
         label.text = "Fetching data..."
-        
-        setupDownloadsTableView()
-        setupDownloadTableViewCell()
+
         setupSegmentControl()
         downloadService.downloadsSession = downloadsSession
         
@@ -115,19 +106,10 @@ final class DownloadsViewController: UIViewController {
         }
     }
     
-    private func setupDownloadTableViewCell() {
-        let nib = UINib.init(nibName: "DownloadTableViewCell", bundle: nil)
-        self.downloadsTableView.register(nib, forCellReuseIdentifier: "DownloadTableViewCell")
-    }
-    
-    private func setupDownloadsTableView() {
-        downloadsTableView.delegate = self
-        downloadsTableView.dataSource = self
-    }
-    
     private func setupSegmentControl() {
         segmentControl.selectedSegmentIndex = 0
     }
+    
     private func showImage(_ imageResponse: ImageResponse) {
         DispatchQueue.main.async {
             do {

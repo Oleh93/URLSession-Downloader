@@ -15,7 +15,7 @@ protocol DownloadTableViewCellDelegate {
 class DownloadTableViewCell: UITableViewCell {
     
     // MARK: IBOutlets
-    
+
     @IBOutlet private weak var icon: UIImageView!
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var name: UILabel!
@@ -26,13 +26,13 @@ class DownloadTableViewCell: UITableViewCell {
     var delegate: DownloadTableViewCellDelegate?
     
     // MARK: IBActions
-    
+
     @IBAction func buttonTapped(_ sender: Any) {
         delegate?.buttonTapped(self)
     }
     
     // MARK: Methods
-
+    
     func updateProgressView(progress: Float) {
         progressView.progress = progress
     }
