@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Network
 
 private enum Constants {
     static let heightForRow: Int = 85
@@ -45,11 +46,40 @@ final class DownloadsViewController: UIViewController {
         downloadsTableView.reloadData()
     }
     
+    func checkConnection() {
+        let monitor = NWPathMonitor()
+        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                DispatchQueue.main.async {
+                    self.startDownloading()
+                }
+            } else {
+                print("No connection.")
+                DispatchQueue.main.sync {
+                    self.downloadsTableView.isHidden = true
+                    self.segmentControl.isHidden = true
+                    self.label.isHidden = false
+                    self.label.text = "No internet connection"
+                }
+            }
+
+            print(path.isExpensive)
+        }
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
+    }
+    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        checkConnection()
+    }
+    
+    // MARK: Private methods
+    
+    private func startDownloading() {
         self.downloadsTableView.isHidden = true
         self.segmentControl.isHidden = true
         label.text = "Fetching data..."
@@ -83,8 +113,6 @@ final class DownloadsViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: Private methods
     
     private func reloadImagesToShow() {
         switch segmentControl.selectedSegmentIndex {
