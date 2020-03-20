@@ -45,6 +45,15 @@ class DownloadTableViewCell: UITableViewCell {
         } else {
             name.text = image?.links.download.absoluteString
         }
+        if let thumb = download?.image.urls.thumb {
+            do {
+                let data = try Data(contentsOf: thumb)
+                self.icon?.image = UIImage(data: data)
+            }catch {
+                print("error")
+            }
+            
+        }
         
         progressView.progress = download?.progress ?? 0
         switch download?.state {

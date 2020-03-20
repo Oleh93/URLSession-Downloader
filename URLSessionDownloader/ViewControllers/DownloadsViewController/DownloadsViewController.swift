@@ -20,8 +20,7 @@ final class DownloadsViewController: UIViewController {
     
     @IBOutlet private weak var downloadsTableView: UITableView!
     @IBOutlet private weak var segmentControl: UISegmentedControl!
-    @IBOutlet private weak var label: UILabel!
-    
+    @IBOutlet private weak var label: UILabel!    
     // MARK: Properties
     
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
